@@ -1,56 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = (props) => {
-  console.log(props)
-  return (
-    <div>
-      <p>{props.course}</p>
-    </div>
-  )
-}
+const Display = ({ counter }) => <div>{counter}</div>
 
-const Content = (props) => {
+const Button = ({ handleClick, text }) => {
   return (
-    [
-      <p>
-        {props.part} {props.exercises}
-      </p>,
-      <p>
-        {props.part2} {props.exercises2}
-      </p>,
-      <p>
-        {props.part3} {props.exercises3}
-      </p>,
-    ]
-  )
-}
-
-const Total = (props) => {
-  return (
-    [
-      <p>Number of exercises {props.exercises + props.exercises2 + props.exercises3}</p>
-    ]
-
+    <button onClick={handleClick}>
+      {text}
+    </button>
   )
 }
 
 const App = () => {
-  const courses = 'Half Stack application development'
-  const part = 'Fundamentals of React'
-  const exercises = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () => setCounter(counter + 1)
+  const decreaseByOne = () => setCounter(counter - 1)
+  const setToZero = () => setCounter(0)
+
   return (
-    <>
-      <h1>Greetings</h1>
-      <Header course={courses} />
-      <Content part={part} exercises={exercises} part2={part2} exercises2={exercises2} part3={part3} exercises3={exercises3} />
-      <Total exercises={exercises} exercises2={exercises2} exercises3={exercises3} />
-    </>
+    <div>
+     <Display counter={counter}/>
+     <Button
+        handleClick={increaseByOne}
+        text='plus'
+      />
+      <Button
+        handleClick={setToZero}
+        text='zero'
+      />     
+      <Button
+        handleClick={decreaseByOne}
+        text='minus'
+      />           
+    </div>
   )
+
 }
 
-ReactDOM.render(<App />, document.getElementById('root')) 
+ReactDOM.render(
+  <App />, 
+  document.getElementById('root')
+)
