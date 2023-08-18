@@ -7,21 +7,37 @@ const Button = ({ onClick, text }) => (
   </button>
 )
 
+const Porcentaje = ({bueno, total}) => {
+  const porcentaje = (bueno / total) * 100
+  
+  return  <h3>positivo: {porcentaje || 0} % </h3>
+}
+
+const Promedio = ({total}) => {
+  const promedio = (total / 3)
+  
+  return  <h3>promedio: {promedio || 0}</h3>
+}
+
 const App = () => {
   const [bueno, setBueno] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [malo, setMalo] = useState(0)
+  const [total, setTotal] = useState(0)
  
   const contadorClickBueno = () => {   
     setBueno(bueno + 1)
+    setTotal(total + 1)
   }
 
   const contadoClickNeutro = () => {       
     setNeutral(neutral + 1)
+    setTotal(total + 1)
   }
 
   const contadorClickMalo = () => {
     setMalo(malo + 1)
+    setTotal(total + 1)
   }
 
   return (
@@ -42,6 +58,10 @@ const App = () => {
      <br />
      <h3>malo: {malo} </h3>
       
+     <br />
+     <h3>todos: {total} </h3>
+     <Promedio total={total} />
+     <Porcentaje bueno={bueno} total={total} />
      </div>
   )
 }
