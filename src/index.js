@@ -1,22 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-const History = (props) => {  
-  if (props.allClicks.length === 0) {
-    return (
-      <div>
-        the app is used by pressing the buttons
-      </div>
-    )
-  }
-
-  return (
-    <div>
-     button press history: {props.allClicks.join(' ')}
-    </div>
-  )
-}
-
 const Button = ({ onClick, text }) => (
   <button onClick={onClick}>
     {text}
@@ -24,29 +8,41 @@ const Button = ({ onClick, text }) => (
 )
 
 const App = () => {
-  const [left, setLeft] = useState(0)
-  const [right, setRight] = useState(0)
-
-  const [allClicks, setAll] = useState([])
-
-  const handleLeftClick = () => {
-    setAll(allClicks.concat('L'))
-    setRight(right + 1)
+  const [bueno, setBueno] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [malo, setMalo] = useState(0)
+ 
+  const contadorClickBueno = () => {   
+    setBueno(bueno + 1)
   }
 
-  const handleRightClick = () => {    
-    setAll(allClicks.concat('R'))
-    setLeft(left + 1)
+  const contadoClickNeutro = () => {       
+    setNeutral(neutral + 1)
+  }
+
+  const contadorClickMalo = () => {
+    setMalo(malo + 1)
   }
 
   return (
     <div>
-      {left}      
-      <Button onClick={handleLeftClick} text='left' />
-      <Button onClick={handleRightClick} text='right' />
-      {right}
-      <History allClicks={allClicks} />
-    </div>
+      <h1>give feedback</h1>         
+      <Button onClick={contadorClickBueno} text='bueno' />
+      <Button onClick={contadoClickNeutro} text='neutro' />   
+      <Button onClick={contadorClickMalo} text='malo' />     
+      <br />
+      <br />
+      <h1>statistics</h1>
+      <br />
+      <h3>bueno: {bueno}</h3>
+     
+     <br />
+     <h3>neutral: {neutral}</h3>
+     
+     <br />
+     <h3>malo: {malo} </h3>
+      
+     </div>
   )
 }
 
