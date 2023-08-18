@@ -7,16 +7,50 @@ const Button = ({ onClick, text }) => (
   </button>
 )
 
-const Porcentaje = ({bueno, total}) => {
-  const porcentaje = (bueno / total) * 100
-  
-  return  <h3>positivo: {porcentaje || 0} % </h3>
-}
-
-const Promedio = ({total}) => {
-  const promedio = (total / 3)
-  
-  return  <h3>promedio: {promedio || 0}</h3>
+const Statistics = ({ bueno, neutral, malo, total }) => {
+  if (total === 0) {
+    return (
+      <div>
+        <h3>no hay estadisticas para mostrar</h3>
+      </div>
+    )
+  } else {
+    const porcentaje = (bueno / total) * 100
+    const promedio = (total / 3)
+    return (
+      <div>
+        <table>
+        <tr>
+          <td colspan="2" align="left"><h1>statistics</h1></td>
+        </tr>
+        <tr>
+          <td><h3>bueno:</h3></td>
+          <td><h3>{bueno}</h3></td>          
+        </tr>
+        <tr>
+          <td><h3>neutral: </h3> </td>
+          <td><h3>{neutral}</h3></td>         
+        </tr>
+        <tr>         
+          <td><h3>malo: </h3></td>
+          <td><h3>{malo}</h3></td>        
+        </tr>
+        <tr>
+          <td><h3>total: </h3> </td>        
+          <td><h3>{total}</h3></td>
+        </tr>
+        <tr>
+          <td><h3>promedio: </h3> </td>        
+          <td><h3>{promedio}</h3></td>
+        </tr>
+        <tr>
+          <td><h3>porcentaje: </h3> </td>        
+          <td><h3>{porcentaje} %</h3></td>
+        </tr>
+      </table>              
+      </div>
+    )
+  }
 }
 
 const App = () => {
@@ -24,13 +58,13 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [malo, setMalo] = useState(0)
   const [total, setTotal] = useState(0)
- 
-  const contadorClickBueno = () => {   
+
+  const contadorClickBueno = () => {
     setBueno(bueno + 1)
     setTotal(total + 1)
   }
 
-  const contadoClickNeutro = () => {       
+  const contadoClickNeutro = () => {
     setNeutral(neutral + 1)
     setTotal(total + 1)
   }
@@ -42,31 +76,26 @@ const App = () => {
 
   return (
     <div>
-      <h1>give feedback</h1>         
-      <Button onClick={contadorClickBueno} text='bueno' />
-      <Button onClick={contadoClickNeutro} text='neutro' />   
-      <Button onClick={contadorClickMalo} text='malo' />     
-      <br />
-      <br />
-      <h1>statistics</h1>
-      <br />
-      <h3>bueno: {bueno}</h3>
-     
-     <br />
-     <h3>neutral: {neutral}</h3>
-     
-     <br />
-     <h3>malo: {malo} </h3>
+      <table>
+        <tr>
+          <td colspan="3" align="center"><h1>give feedback</h1></td>
+        </tr>
+        <tr>
+          <td><Button onClick={contadorClickBueno} text='bueno' /></td>
+          <td><Button onClick={contadoClickNeutro} text='neutro' /></td>
+          <td><Button onClick={contadorClickMalo} text='malo' /></td>
+        </tr>
+      </table>      
+      <br />   
       
-     <br />
-     <h3>todos: {total} </h3>
-     <Promedio total={total} />
-     <Porcentaje bueno={bueno} total={total} />
-     </div>
+      <Statistics bueno={bueno} neutral={neutral} malo={malo} total={total} />
+
+      
+    </div>
   )
 }
 
 ReactDOM.render(
-  <App />, 
+  <App />,
   document.getElementById('root')
 )
