@@ -7,95 +7,28 @@ const Button = ({ onClick, text }) => (
   </button>
 )
 
-const Statistics = ({ bueno, neutral, malo, total }) => {
-  if (total === 0) {
-    return (
-      <div>
-        <h3>no hay estadisticas para mostrar</h3>
-      </div>
-    )
-  } else {
-    const porcentaje = (bueno / total) * 100
-    const promedio = (total / 3)
-    return (
-      <div>
-        <table>
-        <tr>
-          <td colspan="2" align="left"><h1>statistics</h1></td>
-        </tr>
-        <tr>
-          <td><h3>bueno:</h3></td>
-          <td><h3>{bueno}</h3></td>          
-        </tr>
-        <tr>
-          <td><h3>neutral: </h3> </td>
-          <td><h3>{neutral}</h3></td>         
-        </tr>
-        <tr>         
-          <td><h3>malo: </h3></td>
-          <td><h3>{malo}</h3></td>        
-        </tr>
-        <tr>
-          <td><h3>total: </h3> </td>        
-          <td><h3>{total}</h3></td>
-        </tr>
-        <tr>
-          <td><h3>promedio: </h3> </td>        
-          <td><h3>{promedio}</h3></td>
-        </tr>
-        <tr>
-          <td><h3>porcentaje: </h3> </td>        
-          <td><h3>{porcentaje} %</h3></td>
-        </tr>
-      </table>              
-      </div>
-    )
-  }
-}
-
-const App = () => {
-  const [bueno, setBueno] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [malo, setMalo] = useState(0)
-  const [total, setTotal] = useState(0)
-
-  const contadorClickBueno = () => {
-    setBueno(bueno + 1)
-    setTotal(total + 1)
-  }
-
-  const contadoClickNeutro = () => {
-    setNeutral(neutral + 1)
-    setTotal(total + 1)
-  }
-
-  const contadorClickMalo = () => {
-    setMalo(malo + 1)
-    setTotal(total + 1)
-  }
+const App = (props) => {
+  const [selected, setSelected] = useState(0)
 
   return (
     <div>
-      <table>
-        <tr>
-          <td colspan="3" align="center"><h1>give feedback</h1></td>
-        </tr>
-        <tr>
-          <td><Button onClick={contadorClickBueno} text='bueno' /></td>
-          <td><Button onClick={contadoClickNeutro} text='neutro' /></td>
-          <td><Button onClick={contadorClickMalo} text='malo' /></td>
-        </tr>
-      </table>      
-      <br />   
-      
-      <Statistics bueno={bueno} neutral={neutral} malo={malo} total={total} />
-
-      
+      <Button onClick={() => setSelected(Math.floor(Math.random() * 6))} text='next anecdote' />
+      <br />
+      {props.anecdotes[selected]}
     </div>
   )
 }
 
+const anecdotes = [
+  'If it hurts, do it more often',
+  'Adding manpower to a late software project makes it later!',
+  'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+  'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+  'Premature optimization is the root of all evil.',
+  'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
+]
+
 ReactDOM.render(
-  <App />,
+  <App anecdotes={anecdotes} />,
   document.getElementById('root')
 )
