@@ -9,6 +9,7 @@ const Button = ({ onClick, text }) => (
 
 const ContadorVotos = ({selectedVote, selected}) => {
   let count = 0;
+ 
   selectedVote.forEach((num) => {
     if (num === selected) {
       count++;
@@ -16,7 +17,35 @@ const ContadorVotos = ({selectedVote, selected}) => {
   });
   return (
     <div>
-      <h1>Tiene {count} de votos</h1>
+      <h3>Tiene {count} de votos</h3>
+   </div>
+  )
+}
+
+const MasVotada = ({selectedVote}) => { 
+  const frecuencia = {};
+  selectedVote.forEach((num) => {
+    if (frecuencia[num]) {
+      frecuencia[num]++;
+  } else {
+      frecuencia[num] = 1;
+  }  
+  });
+
+  let numeroMasComun= 0;
+  let maxFrecuencia = 0;
+
+  selectedVote.forEach((num) => {
+    if (frecuencia[num] > maxFrecuencia) {
+      maxFrecuencia = frecuencia[num];
+      numeroMasComun = num;
+    }
+  });
+
+  return (
+    <div>
+      {anecdotes[numeroMasComun]} 
+      <h3># de votos es: {maxFrecuencia}</h3>    
    </div>
   )
 }
@@ -26,10 +55,8 @@ const App = (props) => {
   const [selectedVote, setVote] = useState([])
 
 
-  const contadoClickNeutro = () => {   
-    console.log(selected)
-    setVote(prevVotes => [...prevVotes, selected])   
-    console.log(selectedVote)    
+  const contadoClickNeutro = () => {      
+    setVote(prevVotes => [...prevVotes, selected])     
   }
 
   
@@ -43,6 +70,9 @@ const App = (props) => {
       <Button onClick={contadoClickNeutro} text='vote' />
       <br />
       <ContadorVotos selectedVote ={selectedVote} selected = {selected}/>      
+      <br />
+      <h3>Anecdota con mas votos es:</h3>
+      <MasVotada selectedVote ={selectedVote} />
     </div>
   )
 }
