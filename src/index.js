@@ -7,14 +7,42 @@ const Button = ({ onClick, text }) => (
   </button>
 )
 
+const ContadorVotos = ({selectedVote, selected}) => {
+  let count = 0;
+  selectedVote.forEach((num) => {
+    if (num === selected) {
+      count++;
+    }
+  });
+  return (
+    <div>
+      <h1>Tiene {count} de votos</h1>
+   </div>
+  )
+}
+
 const App = (props) => {
   const [selected, setSelected] = useState(0)
+  const [selectedVote, setVote] = useState([])
+
+
+  const contadoClickNeutro = () => {   
+    console.log(selected)
+    setVote(prevVotes => [...prevVotes, selected])   
+    console.log(selectedVote)    
+  }
+
+  
 
   return (
     <div>
       <Button onClick={() => setSelected(Math.floor(Math.random() * 6))} text='next anecdote' />
       <br />
       {props.anecdotes[selected]}
+      <br />
+      <Button onClick={contadoClickNeutro} text='vote' />
+      <br />
+      <ContadorVotos selectedVote ={selectedVote} selected = {selected}/>      
     </div>
   )
 }
