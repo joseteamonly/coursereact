@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Header from './Course/Header'
 import Content from './Course/Content'
+import Total from './Course/Total'
 
 const App = () => {
   const course = {
@@ -34,7 +35,8 @@ const App = () => {
     <>
       <h1>Greetings</h1>
       <Header course={course} />
-      <Content key={course.id} course={course} />      
+      <Content key={course.id} course={course} />     
+      <Total key={course.id} parts={course.parts} /> 
     </>
   )
 }
