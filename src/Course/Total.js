@@ -5,11 +5,9 @@ const Total = ({parts}) => {
     const sum = parts.reduce((accumulator, currentValue) => accumulator + currentValue.exercises, initialValue);
 
     return (
-      [
-        <div>
-            <p>Number of exercises {sum}</p>
-        </div>
-      ]  
+       
+        <p>Number of exercises {sum}</p>
+  
     )
   }
 
