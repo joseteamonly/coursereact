@@ -1,50 +1,70 @@
 import React, { useState } from 'react'
-import Note from './components/Note'
+import Filtro from './components/Filter'
+import FormularioAgregarPersona from './components/FormularioAgregarPersona'
+import ListaPersonas from './components/ListaPersonas'
 
-const App = (props) => {
-    const [notes, setNotes] = useState(props.notes)    
-    const [newNote, setNewNote] = useState('') 
-    const [showAll, setShowAll] = useState(true)
+const App = () => {
+  const [persons, setPersons] = useState([
+    { name: 'Arto Hellas', id: 1, phone: "3002588455" },
+    { name: 'Arto Porras', id: 2, phone: "3002588455" },
+    { name: 'Lila Hellas', id: 3, phone: "3002588455" },
+    { name: 'pedro Hellas', id: 4, phone: "3002588455" }
+  ])
+  const [newName, setNewName] = useState('')
+  const [newPhone, setNewPhone] = useState('')
+  const [searchName, setSearchName] = useState('')
 
-    const handleNoteChange = (event) => {
+  const addName = (event) => {
+    event.preventDefault()
+
+    const nombreExistente = persons.find((person) => person.name === newName);
+
+    if (nombreExistente) {
+      window.alert(`${newName} ya existe en la lista de telefonos`);
+    } else {
+      const personObject = {
+        name: newName,
+        phone: newPhone,
+        id: persons.length + 1,
+      }
+
+      setPersons(persons.concat(personObject))
+    }
+
+    setNewName('')
+    setNewPhone('')
+  }
+
+  const handleNameChange = (event) => {
     console.log(event.target.value)
-    setNewNote(event.target.value)
-    }
+    setNewName(event.target.value)
+  }
 
-    const addNote = (event) => {
-        event.preventDefault()
-        const noteObject = {
-            content: newNote,
-            date: new Date().toISOString(),
-            important: Math.random() < 0.5,
-            id: notes.length + 1,
-          }
-        
-          setNotes(notes.concat(noteObject))
-          setNewNote('')
-    }
+  const handlePhoneChange = (event) => {
+    setNewPhone(event.target.value)
+  }
 
-    const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important)
-    
+  const handleSearchName = (event) => {
+    setSearchName(event.target.value)
+  }
+
+  const personsToShow = searchName === ''
+  ? persons
+  : persons.filter((person) => person.name.toLowerCase() === searchName.toLowerCase()); 
+
   return (
     <div>
-      <h1>Notes</h1>
-      <div>
-        <button onClick={() => setShowAll(!showAll)}>
-          show {showAll ? 'important' : 'all' }
-        </button>
-      </div>
-      <ul>
-       {notesToShow.map(note => (
-          <Note key={note.id} note={note} />
-        ))}
-      </ul>
-      <form onSubmit={addNote}>
-        <input value={newNote} onChange={handleNoteChange}/>
-        <button type="submit">save</button>
-      </form>   
+       <Filtro value={searchName} onChange={handleSearchName} />
+      <h2>Phonebook</h2>
+      <FormularioAgregarPersona
+        onSubmit={addName}
+        name={newName}
+        phone={newPhone}
+        onNameChange={handleNameChange}
+        onPhoneChange={handlePhoneChange}
+      />
+      <h2>Numbers</h2>
+      <ListaPersonas persons={personsToShow} />
     </div>
   )
 }
