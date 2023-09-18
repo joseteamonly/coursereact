@@ -1,8 +1,0 @@
-{
-    "persons":[
-        { "name": "Arto Hellas", "id": 1, "phone": "3002588455" },
-        { "name": "Arto Porras", "id": 2, "phone": "3002588456" },
-        { "name": "Lila Hellas", "id": 3, "phone": "3002588457" },
-        { "name": "pedro Hellas", "id": 4, "phone": "3002588458" }
-    ]
-  }
