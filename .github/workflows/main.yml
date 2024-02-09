@@ -3,7 +3,12 @@ name: Update Feature Branches after Main Merge
 on:
   push:
     branches:
-      - main
+      - development
+      - master
+  pull_request:
+    branches:
+      - '**'
+    types: [opened, synchronize, reopened]
 
 jobs:
   update-branches:
