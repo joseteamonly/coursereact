@@ -7,6 +7,7 @@ const App = () => {
   const [message, setMessage] = useState('');
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [weather, setWeather] = useState(null);
 
   useEffect(() => {
     if (searchName.trim() !== '') {
@@ -45,9 +46,22 @@ const App = () => {
     setSearchName(event.target.value)
   }
 
-  const handleShowDetails = (country) => {
+  const handleShowDetails = async (country) => {
     setSelectedCountry(country);
     setShowDetails(true);
+    console.log('country', country);
+    console.log('country.capital', country.capital);
+    console.log('process.env.REACT_APP_API_KEY', process.env.REACT_APP_API_KEY);
+    try {
+      const response = await axios.get(
+        `http://api.weatherstack.com/current?access_key=cf19e60d29981abbd389e69545c47550&query=colombia`
+      );
+      console.log('promise fulfilled', response.data);
+      setWeather(response.data);
+    } catch (error) {
+      console.error('Error al obtener el informe meteorológico:', error);
+      setWeather(null);
+    }
   };
 
   return (
@@ -84,6 +98,15 @@ const App = () => {
                 ))}
             </ul>
             <img src={selectedCountry?.flags?.png || countries[0].flags?.png } alt={`Bandera de ${selectedCountry?.name?.common || countries[0].name?.common}`} />
+
+            {weather && (
+                <div>
+                  <h3>Informe Meteorológico</h3>
+                  <p>Temperatura: {weather.current.temperature} °C</p>
+                  <p>Descripción: {weather.current.weather_descriptions}</p>
+                  <img src={weather.current.weather_icons } alt='' />
+                </div>
+              )}
           </div>
         ) : null}
       </div>
