@@ -32,6 +32,7 @@ const Total = (props) => {
       <p>Number of exercises {props.exercises + props.exercises2 + props.exercises3}</p>
     ]
   )
+
 }
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
   const exercises2 = 7
   const part3 = 'State of a component'
   const exercises3 = 14
+  
   return (
     <>
       <h1>Greetings</h1>
