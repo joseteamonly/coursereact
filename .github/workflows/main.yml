@@ -1,0 +1,22 @@
+name: Update Feature Branches after Main Merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update feature branches
+        run: |
+          git fetch origin
+          git checkout feature-branch
+          git merge origin/main
+          # Handle conflicts if any
+          git push origin feature-branch
