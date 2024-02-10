@@ -42,6 +42,7 @@ const App = () => {
   const exercises2 = 7
   const part3 = 'State of a component'
   const exercises3 = 14
+  
   return (
     <>
       <h1>Greetings</h1>
@@ -50,6 +51,7 @@ const App = () => {
       <Total exercises={exercises} exercises2={exercises2} exercises3={exercises3} />
     </>
   )
+
 }
 
 ReactDOM.render(<App />, document.getElementById('root')) 
