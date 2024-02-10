@@ -32,13 +32,14 @@ const Total = (props) => {
       <p>Number of exercises {props.exercises + props.exercises2 + props.exercises3}</p>
     ]
   )
+
 }
 
 const App = () => {
   const courses = 'Half Stack application development'
   const part = 'Fundamentals of React'
   const exercises = 10
-  const part2 = 'Using props to pass data'
+  const part2 = 'Using props to pass data de la prueba'
   const exercises2 = 7
   const part3 = 'State of a component'
   const exercises3 = 14
