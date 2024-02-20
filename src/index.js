@@ -43,6 +43,7 @@ const App = () => {
   const exercises2 = 7
   const part3 = 'State of a component in main rama g'
   const exercises3 = 14
+  const part4 = 'Redux'
   
   return (
     <>
