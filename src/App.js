@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filtro from './components/Filter'
 import FormularioAgregarPersona from './components/FormularioAgregarPersona'
 import ListaPersonas from './components/ListaPersonas'
+import personsServices from './services/person'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -12,12 +13,11 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
+    personsServices
+      .getAll()
+      .then(persons => {
+        setPersons(persons)
+      })    
   }, [])
 
   const addName = (event) => {
@@ -33,8 +33,11 @@ const App = () => {
         phone: newPhone,
         id: persons.length + 1,
       }
-
-      setPersons(persons.concat(personObject))
+      personsServices
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))       
+      })      
     }
 
     setNewName('')
@@ -70,7 +73,7 @@ const App = () => {
         onPhoneChange={handlePhoneChange}
       />
       <h2>Numbers</h2>
-      <ListaPersonas persons={personsToShow} />
+      <ListaPersonas persons={personsToShow} setPersons={setPersons} />
     </div>
   )
 }
